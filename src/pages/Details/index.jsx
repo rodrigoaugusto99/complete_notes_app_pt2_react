@@ -4,6 +4,7 @@ import { Button } from '../../components/Button'
 import { Header } from '../../components/Header'
 import { Section } from '../../components/Section'
 import { Tag } from '../../components/Tag'
+import { ButtonText } from '../../components/ButtonText'
 
 /*o children captura tudo que tiver aqui dentro, como se fosse
         uma propriedade generica. O title foi passado propriamente dito*/
@@ -11,6 +12,7 @@ export function Details() {
   return (
     <Container>
       <Header />
+      <ButtonText title='excluir nota'/>
 
       <Section title="Links úteis">
         <Links>

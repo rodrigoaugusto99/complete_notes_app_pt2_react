@@ -325,3 +325,8 @@ export function Tag({ title }) {
     </Container>
   )
 }
+
+ENTAO FICA UM BAGULHO SINISTRAO MESMO:
+componente header, que tem 2 componentes sections, estes tendo childrens, 
+que dentro desses childrens podem ter outros componentes, sendo todos os 
+componentes podendo ter propriedades
