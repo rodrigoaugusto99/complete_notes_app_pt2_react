@@ -263,3 +263,65 @@ ____________________________________________
 ICONES 
 
 npm i react-icons --save
+
+____________________________________________
+fizemos a section com children, pra podermos repetir algumas coisas e 
+outras coisas serem dinamicas, coisas essas que serao outros components
+
+componente com children:
+
+export function Section({ title, children }) {
+  return (
+    <Container>
+      <h2>{title}</h2>
+
+      {children}
+    </Container>
+  )
+}
+
+esse components vai ser utilizaod duas vezes aqui:
+veja que o title nois mudamos ali facilmente como uma propriedades
+normal, mas o children a gente coloco uma parada mais "widget"
+
+
+export function Details() {
+  return (
+    <Container>
+      <Header />
+
+      <Section title="Links úteis">
+        <Links>
+          <li>
+            <a href="#">https://rocketseat.com.br</a>
+          </li>
+          <li>
+            <a href="#">https://rocketseat.com.br</a>
+          </li>
+        </Links>
+      </Section>
+
+      <Section title="Marcadores">
+        <Tag title="express" />
+        <Tag title="node" />
+      </Section>
+
+      <Button title="Voltar" />
+    </Container>
+  )
+}
+
+Essas coisas que colocamos nos childrens das sections
+sao outros componentes:
+- um eh links, que foi feito ali mesmo com ul e a, com estiizacao no
+proprio styled-components do APp(details),
+- e outro eh um outro components separado, que separamos pois sera
+reutilizado em outros lugares:
+
+export function Tag({ title }) {
+  return (
+    <Container>
+      {title}
+    </Container>
+  )
+}
