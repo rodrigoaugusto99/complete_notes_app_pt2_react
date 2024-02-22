@@ -330,3 +330,42 @@ ENTAO FICA UM BAGULHO SINISTRAO MESMO:
 componente header, que tem 2 componentes sections, estes tendo childrens, 
 que dentro desses childrens podem ter outros componentes, sendo todos os 
 componentes podendo ter propriedades
+
+____________________________________________
+condicao:
+
+botao pode ser ativo:
+
+export function ButtonText({ title, isActive = false, ...rest }) {
+  return (
+    <Container
+      type="button"
+      isActive={isActive}
+      {...rest}
+    >
+      {title}
+    </Container>
+  )
+}
+
+no arquivo style.js desse index.jsx que eh um componente, la podemos 
+acessar esse valor, pois foi la que fizemos esse Container:
+podemos fazer ternario aqui mesmo:
+
+export const Container = styled.button`
+  background: none;
+  color: ${({ theme, isActive }) => isActive ? theme.COLORS.ORANGE : theme.COLORS.GRAY_100};
+
+  border: none;
+  font-size: 16px;
+`
+
+ai la ao instanciar esse botao, nois decidimos se ele vai ser ativo ou nao.
+<Menu>
+        <li><ButtonText title="Todos" isActive /></li>
+        <li><ButtonText title="React" /></li>
+        <li><ButtonText title="Nodejs" /></li>
+      </Menu>
+
+      claro que no mundo real, teria outra logica para decidirmos quando colocarmos
+      esse isActive.
