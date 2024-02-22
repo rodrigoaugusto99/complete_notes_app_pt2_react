@@ -257,3 +257,9 @@ export function Button(props){
 }
 
 entre chaves pro jsx saber que eh uma variavel
+
+____________________________________________
+
+ICONES 
+
+npm i react-icons --save
