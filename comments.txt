@@ -1,0 +1,259 @@
+iniciando projeto, 
+package.json ja vem com react e react-dom que o vite ja colocou
+package-lock.json as versoes e historicos de instalacoes de bibliotecas, integridade etc.
+vite.config, configuracoes do vite
+index.html - html que carrega as paginas seguindo o conceito de SPA
+
+comando ja feitinho pelo vit pra rodar - npm run dev
+_____________________________________
+funcionamento do react:
+index.html - padrao entre os servidores, local e remoto, que eh procurar na riaz do projeto
+pelo arquivo chamado index.html, eh ele que vai ser chamado primeiro
+
+no index.html, tem o body com uma div que nao tem conteudo nenhum, e tem um id=root
+o react eh SPA, ou seja, temos um unico arquivo html, e todo oconteudo eh inserido nessa div de forma dinamica.
+quando trocamos de pagina, nao recarregamos, mas sim apenas trocamos, por baixo dos panos, o conteudo dessa div.
+ + leveza, + perfomance, + fluidez
+
+ <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+
+ porem nesse body, tbm temos um script, que ta carregando o src/main.jsx
+
+ import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+
+aqui usamos o react-dom, biblioteca p manipular elementos q fazem parte da dom, que eh a hierarquia, a arvore
+de objetos que fazem parte de uma pagina, de elementos(body, header, h1, etc)
+react dom eh pra navegar/maniupular esses elementos. 
+o react-dom ta pegando o elemento que tem o id"root"
+nessa div "root", la no index.html, vai ser renderizado (.render) 
+aquele conteudo 
+<React.StrictMode>
+    <App />
+  </React.StrictMode>,
+
+  o App, la em cima ta sendo importado de ./App.jsx, que ai sim, nesse arquivo, eh que esta toda aquela
+  pagina padrao que foi feita inicialmente pelo vite 
+_____________________________________
+jsx - sintaxe q usamos p criar itnerfaces com react. tudo eh funcao, 
+conseguimos escrever html dentro do javascript.
+
+export function App(){
+    //como vamos exibir algo pro usuario, entao vamos dar um return
+  return (
+    
+  )
+}
+
+export function ao inves de export default funcion para, ao importar em outro
+arquivo, ser obrigatorio colocar { } e o nome exatamente igual do Componente.
+________________________________
+
+padrao para separar as paginas e estilos:
+nas pasta src, na pasta pages, ao inves de fazer a Details.jsx, vamos
+criar uma PASTA chamada details, e dentro dela fazer index.jsx. ao 
+importar esse arquivo, basta - import Details from './pages/Details',
+pois como eh index.js, eh o padrao a ser carregado. e o arquivo de estilos
+fica na mesma pasta,como styles.css, importa-se assim - import  './styles.css'
+sim, vai ficar varios index.jsx e styles.css, porem em pastas diferents.
+_____________________________________
+css
+
+styled-components (css-in-js)
+ - sem colsiao de classes
+ - desempenho
+ - estilos dinamicos
+ - facil manuntencao
+ - possiblita boas praticas
+
+ --style.css vira style.js
+
+ ---body { background: red}
+vira: 
+import styled from 'styled-components'
+
+export const Container = styled.div`
+    background: red;
+`
+
+importando no index.js:
+---import  './styles.js'
+vira:
+import { Container } from './styles'
+
+___________________________
+temas:
+
+-> tokens de cores:
+
+export default {
+    COLORS: {
+      BACKGROUND_900: "#232129",
+      BACKGROUND_800: "#312E38",
+      BACKGROUND_700: "#3E3B47",
+  
+      WHITE: "#F4EDE8",
+      ORANGE: "#FF9000",
+  
+      GRAY_100: "#999591",
+      GRAY_300: "#666360",
+  
+      RED: "#FF002E"
+    }
+  }
+
+  colocar esse tema la na main
+//importar o ThemeProvider do styhled-compontens
+    import { ThemeProvider } from 'styled-components'
+//importar o arquivo de tema que fizemos
+    import theme from './styles/theme'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+  //envolver o app(Details) com esse ThemeProvider, passando o theme
+    <ThemeProvider theme={theme}>
+      <Details />
+    </ThemeProvider>
+  </React.StrictMode>,
+)
+________________________________
+global styles
+
+import { createGlobalStyle } from "styled-components"
+
+export default createGlobalStyle`
+    * {
+        margin: 0;
+        padding: 0;
+        //padding inteiro nao influencia no tamanho total do elemento
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+    }
+`
+
+importando na main:
+//importando o globalstyles 
+import GlobalStyles from './styles/global'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+    //aqui dentro pra termos acesso aos temas
+      <GlobalStyles/>
+        <Details />
+    </ThemeProvider>
+  </React.StrictMode>,
+)
+
+________________________________
+conceito de arrow function
+
+normal:
+function sum(a, b){
+    return a+b
+}
+const result = sum(7,3)
+
+com arrow:
+const result = (7, 3) => {
+    return a + b
+}
+
+eh uma funcao sem nome e sem declaracao de funcao, ela eh 
+executada na hora, e ja repassa o  resultado pra ~result~
+
+ali no tema, temos essa linha:
+background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+podia ser assim:
+background-color: ${( props ) => props.theme.COLORS.BACKGROUND_800};
+
+usamos conceito de desestruturacao.
+nesse caso, ai background-color automaticamente vai ser atribuido com o valor
+daquele COLORS.BACKGOUND...
+
+_____________________________________
+fontes:
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100
+    ..900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+   global.js:
+   -webkit-font-smoothing: antialiased
+
+    border-style, input, button, textarea{
+        font-family: "Roboto Slab", serif;
+        font-size: 16;
+        outline: none;
+    } 
+
+    _____________________________________
+    criar um botao p reaproveitar - componente.
+
+    PASTA COMPONENTS/BUTTONS/
+
+(Container ta no styles.js da propria pasta)
+
+....import { Container } from './styles'.... 
+
+    export function Button(){
+    return (
+        <Container type='button'>
+            Meu botao
+        </Container>
+    )
+}
+
+PASTA QUE QUERO USAR ESSE COMPONENTS
+
+
+.....import { Container } from './styles'.....
+
+//importa esse components e usa
+import { Button } from '../../components/Button'
+
+export function Details(){
+
+  return (
+    <Container>
+      <h1>Hello World!</h1>
+      <h1>Hello World!</h1>
+      <Button/>
+    </Container>
+    
+  )
+}
+
+Os dois tem COntainer, mas sao dos proprios estilos
+do styled-components
+_______________________________
+PROPRIEDADES
+
+      <Button title='sim'/>
+      <Button title='nao'/>
+      <Button title='talvez'/>
+
+      pro botao receber essas propriedades:
+export function Button(props){
+    return (
+        <Container type='button'>
+            {props.title}
+        </Container>
+    )
+}
+
+entre chaves pro jsx saber que eh uma variavel
