@@ -47,7 +47,7 @@ export const Menu = styled.ul`
 `
 export const Search = styled.div`
   grid-area: search;
-  background-color: violet;
+  padding: 64px 64px 0;
 `
 export const Content = styled.div`
   grid-area: content;
@@ -55,5 +55,13 @@ export const Content = styled.div`
 `
 export const NewNote = styled.button`
   grid-area: newnote;
-  background-color: yellow;
+  
+  background-color: ${({ theme }) => theme.COLORS.ORANGE};
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    margin-right: 8px;
+  }
 `

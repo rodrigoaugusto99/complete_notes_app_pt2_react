@@ -369,3 +369,60 @@ ai la ao instanciar esse botao, nois decidimos se ele vai ser ativo ou nao.
 
       claro que no mundo real, teria outra logica para decidirmos quando colocarmos
       esse isActive.
+
+
+FAZENDO O INPUT - COMPONENTE - O BASICO A SEMPRE SE FAZER
+
+fazer a pasta INPUT nos components
+
+--------o componente----------
+(
+  importacao styles-components
+  propriedades recuperadas no parametro
+  uso das propriedades
+)
+import { Container } from './styles'
+
+export function Input({ icon: Icon, ...rest }) {
+  return (
+    <Container>
+      {Icon && <Icon size={20} />}
+      <input {...rest} />
+    </Container>
+  )
+}
+------styled-components---------
+
+( o container que envolve o botao)
+
+import styled from 'styled-components'
+
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900} ;
+  color: ${({ theme }) => theme.COLORS.GRAY_300};
+  
+  margin-bottom: 8px;
+  border-radius: 10px;
+  > input {
+    height: 56px;
+    width: 100%;
+    padding: 12px;
+    color: ${({ theme }) => theme.COLORS.WHITE};
+    background: transparent;
+    border: 0;
+    &:placeholder {
+      color: ${({ theme }) => theme.COLORS.GRAY_300} 
+    }
+  }
+  > svg {
+    margin-left: 16px;
+  }
+`
+
+----------usando ele---------
+
+import { Input } from '../../components/Input'
+<Input placeholder="Pesquisar pelo título" />
