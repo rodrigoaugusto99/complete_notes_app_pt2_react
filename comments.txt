@@ -426,3 +426,33 @@ export const Container = styled.div`
 
 import { Input } from '../../components/Input'
 <Input placeholder="Pesquisar pelo título" />
+
+
+____________________________________________
+
+AS ROTAS - BASICAMENTE TA TUDO NA PASTA ROUTES.
+
+____________________________________________
+
+pra usar essas rotas:
+
+<NewNote to="/new">
+        <FiPlus/>
+        Criar nota
+</NewNote>
+
+isso eh um componente do styled-components
+
+entao la no style.js:
+
+import { Link } from 'react-router-dom'
+
+export const NewNote = styled(Link)`..............
+
+
+mas, se nao for um componente do styled-components, e for
+um "a" com "href" por exemplo:
+
+import { Link } from 'react-router-dom'
+//antes era a com href, so trocamos pelo Link.
+<Link to="/register">Criar conta</Link>
