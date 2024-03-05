@@ -19,6 +19,7 @@ export function New() {
   const [newLink, setNewLink] = useState("")
 /*acessamos com oprevState o que que tinha antes dentro do array,
 e depois montamos o novo array, com td q tinha antes + o novo link*/
+
   function handleAddLink(){
     setLinks(prevState => [...prevState, newLink])
 
@@ -28,6 +29,19 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
   function handleRemoveLink(deleted){
     setLinks(prevState => prevState.filter(link => link !==deleted))
   }
+
+  
+  const [tags, setTags] = useState([])
+
+  const [newTag, setNewTags] = useState("")
+
+  function handleAddTag(){
+    setTags(prevState => [...prevState, newTag])
+
+   setNewTags('')
+  }
+
+
   return (
     <Container>
       <Header />
@@ -64,8 +78,24 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
 
           <Section title="Marcadores">
             <div className="tags">
-              <NoteItem value="react" />
-              <NoteItem isNew placeholder="Nova tag" />
+              {
+                tags.map((tag, index) => (
+                  <NoteItem 
+                    key={String(index)}
+                    value="react" 
+                    onClick={()=> {}}
+                  />
+                ))
+              }
+              
+
+              <NoteItem 
+              isNew 
+              placeholder="Nova tag" 
+              value={newTag}
+              onChange={e => setNewTags(e.target.value)}
+              onClick={handleAddTag}
+              />
             </div>
           </Section>
 
