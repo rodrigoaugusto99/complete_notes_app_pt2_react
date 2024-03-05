@@ -24,6 +24,10 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
 
     setNewLink('')
   }
+
+  function handleRemoveLink(deleted){
+    setLinks(prevState => prevState.filter(link => link !==deleted))
+  }
   return (
     <Container>
       <Header />
@@ -43,7 +47,9 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
                 <NoteItem
                   key={String(index)}
                   value={link}
-                  onClick={() => {}}
+                  //no noteItem, nois fizemos a propriedade onClick,
+                  //criamos a funcao aqui e mandamos pra la
+                  onClick={() => handleRemoveLink(link)}
                 />
               ))
             }
