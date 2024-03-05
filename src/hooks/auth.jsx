@@ -51,8 +51,22 @@ function AuthProvider({ children }){
     }, [])
 
 
-    async function updateProfile({ user }){
+    async function updateProfile({ user, avatarFile }){
         try {
+
+            if(avatarFile){
+                //vamos enviar como um arquivo
+                const fileUpdloadForm = new FormData()
+                //la no backend, tamo esperando um campo "avatar"
+                //vamos jogar dentro desse formulario, no campo avatar, esse avatarFile
+                fileUpdloadForm.append('avatar',avatarFile)
+                //no imnsonia, a gente jogava esse arquivo pelo multiformdata
+//fazendo a requisicao
+                const response = await api.patch('/users/avatar', fileUpdloadForm)
+//esperando como resposta um usuario com o conteudo atualziado. o user com O AVATAR ATUALIZADO
+//entao vamos botar no avatar do user, o conteudo do response.data, da parte .avatar
+                user.avatar = response.data.avatar
+            }
             await api.put('/users', user)
             localStorage.setItem('@rocketnotes:user', JSON.stringify(user))
 

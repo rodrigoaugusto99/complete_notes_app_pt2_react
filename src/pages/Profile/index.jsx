@@ -4,11 +4,12 @@ import { Input } from '../../components/Input'
 import { Button } from '../../components/Button'
 
 import { Container, Form, Avatar  } from "./styles";
+import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../../hooks/auth';
-
+import { api } from '../../services/api';
 export function Profile() {
   const { user, updateProfile } = useAuth()
 
@@ -17,6 +18,13 @@ export function Profile() {
   const [passwordOld, setPasswordOld] = useState()
   const [passwordNew, setPasswordNew] = useState()
 
+
+  const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+  //se tiver avatar ,ja carrega
+  const [avatar, setAvatar] = useState(avatarUrl)
+  //se nao tiver avatar, vamos carregar com isso
+  const [avatarFile, setAvatarFile] = useState(null)
+
   async function handleUpdate(){
     const user = {
       name, 
@@ -24,8 +32,22 @@ export function Profile() {
       password: passwordNew, 
       old_password: passwordOld,
     }
-    await updateProfile({ user })
+    await updateProfile({ user, avatarFile})
   }
+
+  function handleChangeAvatar(event){
+    const file = event.target.files[0]
+    //colocando aqui o arquivo que o usuario selecionou
+    setAvatarFile(file)
+
+    /*agora, vamos mudar o avatar com essa avatarFile,
+    atualziando aquele estado "avatar" que eh o estado
+    que exibe de fato o avatar*/
+    const imagePreview = URL.createObjectURL(file)
+    setAvatar(imagePreview)
+  }
+  //so com esse handleChangeAvatar, com os dois estados,
+  //ja eh o suficiente pra mudar ali a foto 
 
   return (
     <Container>
@@ -38,7 +60,8 @@ export function Profile() {
       <Form>
       <Avatar>
           <img
-            src="https://github.com/rodrigoaugusto99.png"
+            //src="https://github.com/rodrigoaugusto99.png"
+            src={avatar}  
             alt="Foto do usuário"
           />
           <label htmlFor="avatar">
@@ -47,6 +70,7 @@ export function Profile() {
             <input
               id="avatar"
               type="file"
+              onChange={handleChangeAvatar}
             />
           </label>
         </Avatar>
