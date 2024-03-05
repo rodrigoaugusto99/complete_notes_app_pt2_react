@@ -41,6 +41,12 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
    setNewTags('')
   }
 
+  function handleRemoveTag(deleted){
+    //esse filtro tras de volta todas as tags, menos a que estou deletando
+    //(a que foi pelo parametro)
+    setTags(prevState => prevState.filter(tag => tag !==deleted))
+  }
+
 
   return (
     <Container>
@@ -82,8 +88,8 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
                 tags.map((tag, index) => (
                   <NoteItem 
                     key={String(index)}
-                    value="react" 
-                    onClick={()=> {}}
+                    value={tag}
+                    onClick={()=> handleRemoveTag(tag)}
                   />
                 ))
               }
