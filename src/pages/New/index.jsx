@@ -6,13 +6,14 @@ import { NoteItem } from '../../components/NoteItem'
 import { Section } from '../../components/Section'
 import { Button } from '../../components/Button'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-
-
+import { api } from '../../services/api'
 
 export function New() {
 
+  const navigate = useNavigate()
+ //________________________________
   //estado que guarda todos os links
   const [links, setLinks] = useState([])
   //estado que guarda o link que vai ser adicionado
@@ -30,7 +31,7 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
     setLinks(prevState => prevState.filter(link => link !==deleted))
   }
 
-  
+  //__________________________________
   const [tags, setTags] = useState([])
 
   const [newTag, setNewTags] = useState("")
@@ -46,6 +47,22 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
     //(a que foi pelo parametro)
     setTags(prevState => prevState.filter(tag => tag !==deleted))
   }
+//______________________________________
+
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+
+  async function handleNewNote(){
+    await api.post('/notes', {
+      title,
+      description, 
+      tags, 
+      links,
+    })
+
+    alert('nota criada com sucesso(sem tratamento)')
+    navigate('/')
+  }
 
 
   return (
@@ -58,8 +75,14 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
             <Link to="/">voltar</Link>
           </header>
 
-          <Input placeholder="Título" />
-          <Textarea placeholder="Observações" />
+          <Input 
+            placeholder="Título" 
+            onChange={e => setTitle(e.target.value)}
+          />
+          <Textarea 
+            placeholder="Observações" 
+            onChange={e => setDescription(e.target.value)}
+          />
           <Section title="links úteis">
             {
               //map retorna, alem do item, tbm retorna o index
@@ -105,7 +128,10 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
             </div>
           </Section>
 
-          <Button title="Salvar" />
+          <Button 
+            title="Salvar" 
+            onClick={handleNewNote}
+          />
         </Form>
       </main>
     </Container>
