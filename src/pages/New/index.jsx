@@ -53,6 +53,19 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
   const [description, setDescription] = useState('')
 
   async function handleNewNote(){
+
+    if(!title){
+      return alert('digite um titulo para a nota')
+    }
+    if(newLink && newTag){
+      return alert('Ha um campos pendentes para adicionar, se voce salvar, eles serao descartados')
+    }
+    if(newLink){
+      return alert('Ha um link pendente para adicionar, se voce salvar, esse link sera descartado')
+    }
+    if(newTag){
+      return alert('Ha um tag pendente para adicionar, se voce salvar, essa tag sera descartado')
+    }
     await api.post('/notes', {
       title,
       description, 
