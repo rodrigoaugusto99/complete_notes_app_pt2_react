@@ -13,6 +13,19 @@ import { api } from '../../services/api'
 
 export function Home() {
   const [tags, setTags] = useState([])
+  const [tagsSelected, setTagsSelected] = useState([])
+
+  function handleTagSelected(tagName){
+    const alreadySelected = tagsSelected.includes(tagName)
+    if(alreadySelected){
+      const filteredTags = tagsSelected.filter(tag => tag !== tagName)
+      setTagsSelected(filteredTags)
+    } else {
+      setTagsSelected(prevState => [...prevState, tagName])
+    }
+    console.log(alreadySelected)
+    
+  }
 
   //arrow func tion que recebe um vetor pra colocar os estados dependentes
   //vazio pq nao queremos buscar o tempo todo pelas tags, vamos buscar apena
@@ -43,7 +56,14 @@ export function Home() {
       <Header></Header>
 
       <Menu>
-        
+      
+        <li>
+          <ButtonText 
+            title="Todos" 
+            onClick={() => handleTagSelected('all')}
+            $isactive={tagsSelected.length === 0}
+          />
+        </li>
         {
           tags && tags.map(tag =>(
             //chave vms colocar o id pois eh unico la no sqlite
@@ -51,22 +71,12 @@ export function Home() {
             <li key={String(tag.id)}>  
               <ButtonText 
                 title={tag.name} 
+                onClick={() => handleTagSelected(tag.name)}
+                $isactive={tagsSelected.includes(tag.name)}
               />
             </li>
           ))
         }
-        <li>
-          <ButtonText 
-            title="Todos" 
-            $isactive 
-          />
-        </li>
-        
-        <li>
-          <ButtonText 
-            title="Nodejs"
-          />
-        </li>
       </Menu>
 
       <Search>
