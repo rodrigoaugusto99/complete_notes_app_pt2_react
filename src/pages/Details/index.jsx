@@ -32,7 +32,7 @@ export function Details() {
   }, [])
 
   function handleBack(){
-    navigate('/')
+    navigate(-1)
   }
 
   async function handleConfirm(){
@@ -40,7 +40,7 @@ export function Details() {
 
     if(confirm){
       await api.delete(`/notes/${params.id}`)
-      navigate('/')
+      navigate(-1)
     }
   }
 

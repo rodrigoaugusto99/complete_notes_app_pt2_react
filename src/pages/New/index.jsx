@@ -6,9 +6,10 @@ import { NoteItem } from '../../components/NoteItem'
 import { Section } from '../../components/Section'
 import { Button } from '../../components/Button'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { api } from '../../services/api'
+import { ButtonText } from '../../components/ButtonText'
 
 export function New() {
 
@@ -74,7 +75,11 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
     })
 
     alert('nota criada com sucesso(sem tratamento)')
-    navigate('/')
+    navigate(-1)
+  }
+
+  function handleBack(){
+    navigate(-1)
   }
 
 
@@ -85,7 +90,12 @@ e depois montamos o novo array, com td q tinha antes + o novo link*/
         <Form>
           <header>
             <h1>Criar nota</h1>
-            <Link to="/">voltar</Link>
+            <ButtonText 
+            title='voltar'
+            onClick={handleBack}
+            />
+              
+           
           </header>
 
           <Input 

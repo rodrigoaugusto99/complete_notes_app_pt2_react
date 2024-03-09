@@ -6,7 +6,7 @@ import { Button } from '../../components/Button'
 import { Container, Form, Avatar  } from "./styles";
 import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 
-import { Link } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../services/api';
@@ -49,12 +49,17 @@ export function Profile() {
   //so com esse handleChangeAvatar, com os dois estados,
   //ja eh o suficiente pra mudar ali a foto 
 
+  const navigate = useNavigate()
+  function handleBack(){
+    navigate(-1)
+  }
+
   return (
     <Container>
       <header>
-        <Link to="/">
+        <button type='button' onClick={handleBack}>
           <FiArrowLeft />
-        </Link>
+        </button>
       </header>
 
       <Form>
