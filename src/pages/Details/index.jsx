@@ -34,6 +34,19 @@ export function Details() {
   function handleBack(){
     navigate('/')
   }
+
+  async function handleConfirm(){
+    const confirm = window.confirm('deseja realmente remover a nota?')
+
+    if(confirm){
+      await api.delete(`/notes/${params.id}`)
+      navigate('/')
+    }
+  }
+
+  /*o data vem la da rota notes/:id, e no controller, esse eh o metoodo 
+  manda um response com note, links e tags. ele mandou isso mastigadinho pra ca
+  depois de pegar do sqlite. */
   return (
     <Container>
       <Header />
@@ -41,7 +54,10 @@ export function Details() {
   data && 
       <main>
         <Content>
-          <ButtonText title="Excluir nota" />
+          <ButtonText 
+          title="Excluir nota" 
+          onClick={handleConfirm}
+          />
 
           <h1>
             {data.note.title}
