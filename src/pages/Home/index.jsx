@@ -20,6 +20,10 @@ export function Home() {
   
 
   function handleTagSelected(tagName){
+    if(tagName === 'all'){
+      return setTagsSelected([])
+    }
+
     const alreadySelected = tagsSelected.includes(tagName)
     if(alreadySelected){
       const filteredTags = tagsSelected.filter(tag => tag !== tagName)
@@ -98,7 +102,15 @@ export function Home() {
         <Input
           placeholder="Pesquisar pelo título"
           //conteudo da caixa de texto sendo armazenado no estado
-          onChange={() => setSearch(e.target.value)}
+          /*no "e", ele guarda o conteudo que ta na caixihha,
+          quando da onChange, dispara e atualiza o search com
+          o novo conteudo atraves do setSearh, passando o valor atual
+          da caixinha (e.target.value(*/
+
+          /*e como o seach eh uma dependencia daquele useEffect
+          pra atualizsar as notas (fetchNotes), chama aquele useEffect
+          que faz o filtro com tags e search na query.*/
+          onChange={(e) => setSearch(e.target.value)}
         />
       </Search>
 
