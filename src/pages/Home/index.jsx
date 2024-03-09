@@ -14,6 +14,10 @@ import { api } from '../../services/api'
 export function Home() {
   const [tags, setTags] = useState([])
   const [tagsSelected, setTagsSelected] = useState([])
+  const [search, setSearch] = useState('')
+  //tbm foi feito estado de notas p guardar e atualizar
+  const [notes, setNotes] = useState([])
+  
 
   function handleTagSelected(tagName){
     const alreadySelected = tagsSelected.includes(tagName)
@@ -44,6 +48,17 @@ export function Home() {
     }
     fetchTags()
   }, [])
+
+  /*nesse useEffect, quero que  seja executado novamente se o usuario selecionar uma tag nova.
+  se seleciona tag nova, quero que a pesquisa recarregue com aqueel filtro */
+  useEffect(() => {
+    async function fetchNotes(){
+      //query
+      const response = await api.get(`/notes?title=${search}&tags=${tagsSelected}`)
+      setNotes(response.data)
+    }
+    fetchNotes()
+  },[tagsSelected, search])
 
   /*tags && pra certificar-se que tem conteudo ali dentro 
   faz o mapeamento com o map iterando e criando cada tag(ButtonText)*/
@@ -80,19 +95,22 @@ export function Home() {
       </Menu>
 
       <Search>
-        <Input placeholder="Pesquisar pelo título" />
+        <Input
+          placeholder="Pesquisar pelo título"
+          //conteudo da caixa de texto sendo armazenado no estado
+          onChange={() => setSearch(e.target.value)}
+        />
       </Search>
 
       <Content>
         <Section title="Minhas notas">
-          <Note data={{
-            title: 'React',
-            tags: [
-              { id: '1', name: 'react' },
-              { id: '2', name: 'rocketseat' }
-            ]
-          }}
-          />
+        {notes.map((note) => (
+            <Note
+              key={String(note.id)}
+              data={note}
+              //onClick={() => handleDetails(note.id)}
+            />
+          ))}
         </Section>
       </Content>
 
