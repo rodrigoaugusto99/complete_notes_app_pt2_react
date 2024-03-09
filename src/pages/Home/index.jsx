@@ -8,6 +8,8 @@ import { ButtonText } from '../../components/ButtonText'
 import { Input } from '../../components/Input'
 import { useState, useEffect } from 'react'
 import { api } from '../../services/api'
+import { useNavigate } from 'react-router-dom'
+
 
 //pras tags nao ficarem duplicadas, iremos fazer uma logica la no backend no banco
 
@@ -17,7 +19,7 @@ export function Home() {
   const [search, setSearch] = useState('')
   //tbm foi feito estado de notas p guardar e atualizar
   const [notes, setNotes] = useState([])
-  
+  const navigate = useNavigate()
 
   function handleTagSelected(tagName){
     if(tagName === 'all'){
@@ -33,6 +35,10 @@ export function Home() {
     }
     console.log(alreadySelected)
     
+  }
+
+  function handleDetails(id){
+    navigate(`/details/${id}`)
   }
 
   //arrow func tion que recebe um vetor pra colocar os estados dependentes
@@ -116,11 +122,11 @@ export function Home() {
 
       <Content>
         <Section title="Minhas notas">
-        {notes.map((note) => (
+        {notes.map(note => (
             <Note
               key={String(note.id)}
               data={note}
-              //onClick={() => handleDetails(note.id)}
+              onClick={() => handleDetails(note.id)}
             />
           ))}
         </Section>
